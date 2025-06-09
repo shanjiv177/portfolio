@@ -135,7 +135,7 @@ function HomePage() {
             Feel free to <span className="italic">explore me</span> xd
           </p>
           <div>
-            <ul className="mx-auto flex flex-col sm:flex-row items-center justify-start gap-4">
+            <ul className="mx-auto flex flex-row items-center justify-start gap-4">
               <li className="flex gap-1 justify-center items-center hover:text-blue-400">
                 <Link
                   href="https://github.com/shanjiv177"
