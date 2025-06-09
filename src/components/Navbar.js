@@ -58,13 +58,13 @@ function Navbar() {
               </Button>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link href="/#contact" className="w-full sm:w-auto">
               <Button variant="ghost" className="w-full sm:w-auto px-4 py-2 transition-colors">
                 Contact
               </Button>
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
       {/* Optional: Overlay for mobile menu */}
