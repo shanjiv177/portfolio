@@ -8,9 +8,9 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="absolute top-0 w-full border-b-2 bg-neutral-950 z-[100]">
+    <nav className="absolute top-0 w-full border-b-2 z-[100]">
       <div className="flex items-center justify-between mx-auto max-w-4xl px-4 py-2">
-        <div className="py-2 text-2xl sm:text-3xl font-bold">
+        <div className="py-2 text-2xl sm:text-3xl font-bold text-blue-400">
           <Link href="/">Shanjiv A</Link>
         </div>
         {/* Hamburger for mobile */}

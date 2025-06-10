@@ -4,7 +4,7 @@ import { Github, Linkedin, Twitter } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-neutral-800 bg-neutral-950/80 py-6 mt-12">
+    <footer className="w-full border-t border-neutral-800 py-6 mt-12">
       <ul className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-4">
         <li className="flex gap-1 justify-center items-center hover:text-blue-400">
           <Github className="w-4 h-4" />

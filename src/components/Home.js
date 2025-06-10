@@ -1,21 +1,23 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Github, Linkedin, Twitter } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import BlogCard from "@/app/blogs/BlogCard";
 import { getAllBlogs } from "@/lib/blogs";
 import { getAllProjects } from "@/lib/projects";
 import ProjectCard from "@/app/projects/ProjectCard";
-import Link from "next/link";
-import { Github, Linkedin, Twitter } from "lucide-react";
 import Script from "next/script";
+
 
 function ViewAllCard({ href, label }) {
   return (
     <Link href={href} className="w-full">
-      <div className="w-full flex items-center justify-center border border-neutral-700 rounded-md bg-neutral-900/40 hover:bg-neutral-800/60 transition-colors cursor-pointer py-3 mt-2">
-        <span className="text-blue-400 font-semibold text-sm">
+      <Card className="w-full flex items-center justify-center border border-neutral-700 rounded-md bg-neutral-900/40 hover:bg-neutral-800/60 transition-colors cursor-pointer py-3 mt-2">
+        <CardContent className="text-accent font-semibold text-sm">
           {label} &rarr;
-        </span>
-      </div>
+        </CardContent>
+      </Card>
     </Link>
   );
 }
@@ -173,7 +175,7 @@ function HomePage() {
             alt="Shanjiv A"
             width={500}
             height={1500}
-            className="rounded-md shadow-lg w-60 md:w-96"
+            className="rounded-xl object-cover shadow-xl w-60 md:w-96"
             priority
           />
         </div>
@@ -184,17 +186,19 @@ function HomePage() {
         <h2 className="text-xl font-semibold text-white mb-4">Education</h2>
         <div className="flex flex-col gap-3">
           {education.map((edu, idx) => (
-            <div
+            <Card
               key={idx}
-              className="border border-neutral-800 rounded-md bg-neutral-900/40 p-4"
+              className="p-4"
             >
-              <div className="text-lg font-bold text-blue-300">
-                {edu.degree}
-              </div>
-              <div className="text-gray-200">{edu.institution}</div>
-              <div className="text-gray-400 text-sm">{edu.year}</div>
-              <div className="text-gray-400 text-sm">{edu.grade}</div>
-            </div>
+              <CardHeader className="p-0 pb-2">
+                <CardTitle className="text-lg font-bold text-blue-300">{edu.degree}</CardTitle>
+                <CardDescription className="text-gray-200">{edu.institution}</CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                <div className="text-gray-400 text-sm">{edu.year}</div>
+                <div className="text-gray-400 text-sm">{edu.grade}</div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </section>
@@ -204,9 +208,9 @@ function HomePage() {
         <h2 className="text-xl font-semibold text-white mb-4">Experience</h2>
         <div className="flex flex-col gap-3">
           {experience.map((job, idx) => (
-            <div
+            <Card
               key={idx}
-              className="border border-neutral-800 rounded-md bg-neutral-900/40 p-4 flex items-start gap-3"
+              className="p-4 flex items-start gap-3"
             >
               {job.logo && (
                 <Image
@@ -214,35 +218,39 @@ function HomePage() {
                   alt={job.company + " logo"}
                   width={40}
                   height={40}
-                  className="rounded object-contain p-1"
+                  className="object-contain p-1"
                 />
               )}
               <div className="flex-1">
-                <div className="text-lg font-bold text-green-300 flex items-center gap-2">
-                  {job.company}
-                </div>
-                {job.positions.map((pos, posIdx) => (
-                  <div
-                    key={posIdx}
-                    className="mt-2 pl-2 border-l-2 border-green-700"
-                  >
-                    <div className="font-semibold text-green-200">
-                      {pos.role}
+                <CardHeader className="p-0 pb-2">
+                  <CardTitle className="text-lg font-bold text-green-300 flex items-center gap-2">
+                    {job.company}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  {job.positions.map((pos, posIdx) => (
+                    <div
+                      key={posIdx}
+                      className="mt-2 pl-2 border-l-2 border-green-700"
+                    >
+                      <div className="font-semibold text-green-200">
+                        {pos.role}
+                      </div>
+                      <div className="text-gray-400 text-xs">{pos.period}</div>
+                      <ul className="list-disc list-inside text-gray-400 text-sm mt-1 space-y-1">
+                        {Array.isArray(pos.description) ? (
+                          pos.description.map((point, i) => (
+                            <li key={i}>{point}</li>
+                          ))
+                        ) : (
+                          <li>{pos.description}</li>
+                        )}
+                      </ul>
                     </div>
-                    <div className="text-gray-400 text-xs">{pos.period}</div>
-                    <ul className="list-disc list-inside text-gray-400 text-sm mt-1 space-y-1">
-                      {Array.isArray(pos.description) ? (
-                        pos.description.map((point, i) => (
-                          <li key={i}>{point}</li>
-                        ))
-                      ) : (
-                        <li>{pos.description}</li>
-                      )}
-                    </ul>
-                  </div>
-                ))}
+                  ))}
+                </CardContent>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </section>
@@ -254,9 +262,9 @@ function HomePage() {
         </h2>
         <div className="flex flex-col gap-3">
           {extracurriculars.map((job, idx) => (
-            <div
+            <Card
               key={idx}
-              className="border border-neutral-800 rounded-md bg-neutral-900/40 p-4 flex items-start gap-3"
+              className="p-4 flex items-start gap-3"
             >
               {job.logo && (
                 <Image
@@ -268,31 +276,35 @@ function HomePage() {
                 />
               )}
               <div className="flex-1">
-                <div className="text-lg font-bold text-yellow-300 flex items-center gap-2">
-                  {job.company}
-                </div>
-                {job.positions.map((pos, posIdx) => (
-                  <div
-                    key={posIdx}
-                    className="mt-2 pl-2 border-l-2 border-yellow-700"
-                  >
-                    <div className="font-semibold text-yellow-200">
-                      {pos.role}
+                <CardHeader className="p-0 pb-2">
+                  <CardTitle className="text-lg font-bold text-yellow-300 flex items-center gap-2">
+                    {job.company}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  {job.positions.map((pos, posIdx) => (
+                    <div
+                      key={posIdx}
+                      className="mt-2 pl-2 border-l-2 border-yellow-700"
+                    >
+                      <div className="font-semibold text-yellow-200">
+                        {pos.role}
+                      </div>
+                      <div className="text-gray-400 text-xs">{pos.period}</div>
+                      <ul className="list-disc list-inside text-gray-400 text-sm mt-1 space-y-1">
+                        {Array.isArray(pos.description) ? (
+                          pos.description.map((point, i) => (
+                            <li key={i}>{point}</li>
+                          ))
+                        ) : (
+                          <li>{pos.description}</li>
+                        )}
+                      </ul>
                     </div>
-                    <div className="text-gray-400 text-xs">{pos.period}</div>
-                    <ul className="list-disc list-inside text-gray-400 text-sm mt-1 space-y-1">
-                      {Array.isArray(pos.description) ? (
-                        pos.description.map((point, i) => (
-                          <li key={i}>{point}</li>
-                        ))
-                      ) : (
-                        <li>{pos.description}</li>
-                      )}
-                    </ul>
-                  </div>
-                ))}
+                  ))}
+                </CardContent>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </section>
@@ -302,7 +314,7 @@ function HomePage() {
         <h2 className="text-xl font-semibold text-white mb-4">
           Featured Blogs
         </h2>
-        <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {blogs.map((blog) => (
             <BlogCard key={blog.slug} blog={blog} />
           ))}
@@ -315,7 +327,7 @@ function HomePage() {
         <h2 className="text-xl font-semibold text-white mb-4">
           Featured Projects
         </h2>
-        <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}

@@ -19,7 +19,7 @@ function BlogCard({ blog }) {
     : [];
 
   return (
-    <Card className="bg-neutral-900/40 border border-neutral-800 backdrop-blur-2xl shadow-sm hover:shadow-md transition-shadow p-2">
+    <Card className="p-2">
       <CardHeader className="p-2 pb-0">
         <CardTitle className="text-white text-base font-semibold mb-1 line-clamp-1">
           {title}
@@ -45,7 +45,7 @@ function BlogCard({ blog }) {
       </CardContent>
       <CardFooter className="p-2 pt-1">
         <Link href={`/blogs/${slug}`}>
-          <Button variant="outline">Read more</Button>
+          <Button variant="secondary">Read more</Button>
         </Link>
       </CardFooter>
     </Card>
