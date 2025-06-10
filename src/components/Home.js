@@ -8,6 +8,7 @@ import { getAllBlogs } from "@/lib/blogs";
 import { getAllProjects } from "@/lib/projects";
 import ProjectCard from "@/app/projects/ProjectCard";
 import Script from "next/script";
+import Contact from "./contact";
 
 
 function ViewAllCard({ href, label }) {
@@ -67,11 +68,10 @@ function HomePage() {
           description: [
             "Contributed to IRIS, the official student-led ERP system of NITK, serving 15K+ active users.",
             "Conducted performance benchmarking and load testing of key endpoints using k6, with a focus on optimizing the Hostels Module.",
-            "Designed and deployed a comprehensive systems monitoring solution leveraging the Proxmox Metrics API and Telegraf, integrating real-time data into InfluxDB.",
-            "Developed interactive Grafana dashboards to visualize system performance metrics and enhance observability.",
-            "Working on MySQL Group Replication strategies to ensure high availability, scalability, and fault tolerance in database systems.",
-            "Dockerized applications to streamline deployment and enhance portability across environments.",
-            "Explored Zabbix for monitoring infrastructure, gaining hands-on experience with its alerting and visualization features.",
+            "Developed Grafana dashboards to visualize system performance metrics and enhance observability.",
+            "Working on Replication strategies to ensure high availability, scalability, and fault tolerance in the IRIS database system.",
+            "Dockerized applications to streamline deployment.",
+            "Explored and Deployed Zabbix for monitoring infrastructure, gaining hands-on experience with its alerting and visualization features.",
           ],
         },
       ],
@@ -334,6 +334,8 @@ function HomePage() {
           <ViewAllCard href="/projects" label="View all projects" />
         </div>
       </section>
+
+      <Contact />
     </main>
   );
 }
