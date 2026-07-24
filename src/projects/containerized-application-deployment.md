@@ -2,7 +2,8 @@
 title: "Containerized Application Deployment"
 slug: "containerized-application-deployment"
 description: "Containerized a Ruby on Rails app with MySQL, deployed with Docker, Kubernetes, and Nginx reverse proxy."
-tech: ["Docker", "Kubernetes", "Nginx", "Ruby on Rails", "MySQL", "GitLab CI/CD"]
+tech:
+  ["Docker", "Kubernetes", "Nginx", "Ruby on Rails", "MySQL", "GitLab CI/CD"]
 date: "2024-02-01"
 status: "Completed"
 ReadMore: true

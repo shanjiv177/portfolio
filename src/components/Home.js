@@ -2,14 +2,19 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Github, Linkedin, Twitter } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import BlogCard from "@/app/blogs/BlogCard";
 import { getAllBlogs } from "@/lib/blogs";
 import { getAllProjects } from "@/lib/projects";
 import ProjectCard from "@/app/projects/ProjectCard";
 import Script from "next/script";
 import Contact from "./contact";
-
 
 function ViewAllCard({ href, label }) {
   return (
@@ -45,33 +50,61 @@ function HomePage() {
         typeof b.weight === "number" ? b.weight : Number.MAX_SAFE_INTEGER;
       return wa - wb;
     })
-    .slice(0, 3);
+    .slice(0, 4);
 
   const education = [
     {
-      degree: "B.Tech in Computer Science and Engineering",
-      institution:
-        "National Institute of Technology Karnataka (NITK), Surathkal",
-      year: "2023 - 2027",
-      grade: "CGPA: 8.96",
+      degree: "Bachelor of Technology in Computer Science and Engineering",
+      institution: "National Institute of Technology Karnataka, Surathkal",
+      year: "Aug 2023 - Present",
+      grade: "CGPA: 8.76",
     },
   ];
 
   const experience = [
     {
+      company: "CapitalOne",
+      logo: "/logos/capital_one.png",
+      positions: [
+        {
+          role: "SDE Intern",
+          period: "May 2026 - Jul 2026",
+          description: [
+            "Developed the Next Best Actions feature, aggregating dataset health metrics and integrating remediation workflows from diverse enterprise tools across multiple Business Applications.",
+            "Eliminated manual metric analysis by engineering a prioritized recommendation engine that routes users to the most effective dataset fixes, leading to a reduction in analysis time by several hours.",
+            "Streamlined communication by building a notification interface to email data owners, eliminating context-switching.",
+          ],
+        },
+      ],
+    },
+    {
+      company: "Tata Communications",
+      logo: "/logos/tata_comm.png",
+      positions: [
+        {
+          role: "Intern",
+          period: "May 2025 - Jul 2025",
+          description: [
+            "Developed a proof of concept for WAN aggregation and failover for high-availability media and vehicle connectivity.",
+            "Simulated failovers on MPTCP and OpenWRT, ensuring quick recovery on real time applications.",
+            "Wrote scripts to switch routing paths based on real-time link health for automated WAN failover.",
+          ],
+        },
+      ],
+    },
+    {
       company: "IRIS, NITK",
       logo: "/logos/iris.png",
       positions: [
         {
-          role: "Systems Developer",
-          period: "March 2024 – Present",
+          role: "Systems Lead",
+          period: "Mar 2024 - Present",
           description: [
-            "Contributed to IRIS, the official student-led ERP system of NITK, serving 15K+ active users.",
-            "Conducted performance benchmarking and load testing of key endpoints using k6, with a focus on optimizing the Hostels Module.",
-            "Developed Grafana dashboards to visualize system performance metrics and enhance observability.",
-            "Working on Replication strategies to ensure high availability, scalability, and fault tolerance in the IRIS database system.",
-            "Dockerized applications to streamline deployment.",
-            "Explored and Deployed Zabbix for monitoring infrastructure, gaining hands-on experience with its alerting and visualization features.",
+            "Managed the deployment and operations of IRIS, an ERP platform scaling to serve 24,000+ users.",
+            "Architected and configured the core mail server infrastructure using Proxmox Mail Gateway, Postal and Mailu for secure and consistent email delivery.",
+            "Load tested critical modules using k6 to handle 1,000+ concurrent users, ensuring zero downtime during peak traffic.",
+            "Built an in-house staging environment to drive workflows for on-demand web and mobile application builds and deployments.",
+            "Evaluated and tested high-availability databases by configuring MySQL InnoDB Clusters with Group Replication.",
           ],
         },
       ],
@@ -84,21 +117,11 @@ function HomePage() {
       logo: "/logos/webclub.png",
       positions: [
         {
-          role: "Secretary, Systems and Security SIG",
-          period: "March 2025 – Present",
+          role: "Executive Member, Systems and Security SIG",
+          period: "Sept 2024 - Present",
           description: [
-            "Organized a workshop on Docker fundamentals, covering containerization, virtualization, and core concepts.",
-            "Conducted hands-on demonstration on Docker Compose, container networking, and storage management.",
-            "Actively contribute to systems projects and security discussions.",
-          ],
-        },
-        {
-          role: "Member, Systems and Security SIG",
-          period: "September 2024 – March 2025",
-          description: [
-            "Hosted a session on Docker fundamentals, covering containerization, virtualization, and core concepts.",
-            "Conducted hands-on demonstration on Docker Compose, container networking, and storage management.",
-            "Actively contribute to systems projects and security discussions.",
+            "Held technical sessions on Linux CLI, shell scripting, and Docker (Compose, Networking, Volumes) for 150+ attendees.",
+            "Co-organized WebClub CTF 2025 and 2026 alongside multiple events within the Systems and Security domain.",
           ],
         },
       ],
@@ -108,13 +131,11 @@ function HomePage() {
       logo: "/logos/ieee.png",
       positions: [
         {
-          role: "Executive Member, CompSoc SIG",
-          period: "October 2024 – Present",
+          role: "Executive Member",
+          period: "Oct 2024 - Present",
           description: [
-            "Served as Point of Contact for IEEE’s flagship fresher’s event Eureka, including a CTF and a Black Box contest.",
-            "Contributed to a session on the inner working of the Internet and an introduction to Web Development.",
-            "Provided insights into various tools and technologies for programming.",
-            "Working on an Emulator for the Nintendo Entertainment System.",
+            "Served as Point of Contact for Eureka (CTF), IEEE's flagship event for 150+ participants.",
+            "Mentored juniors on a Docker project and built a 6502 architecture NES emulator.",
           ],
         },
       ],
@@ -133,7 +154,7 @@ function HomePage() {
             I&apos;m an aspiring software engineer with a strong interest in
             systems and infrastructure. I am always curious to explore and learn
             how things work under the hood. I love to build things that help
-            people solve problems and for fun to. <br />
+            people solve problems and for fun too. <br />
             Feel free to <span className="italic">explore me</span> xd
           </p>
           <div>
@@ -186,13 +207,14 @@ function HomePage() {
         <h2 className="text-xl font-semibold text-white mb-4">Education</h2>
         <div className="flex flex-col gap-3">
           {education.map((edu, idx) => (
-            <Card
-              key={idx}
-              className="p-4"
-            >
+            <Card key={idx} className="p-4">
               <CardHeader className="p-0 pb-2">
-                <CardTitle className="text-lg font-bold text-blue-300">{edu.degree}</CardTitle>
-                <CardDescription className="text-gray-200">{edu.institution}</CardDescription>
+                <CardTitle className="text-lg font-bold text-blue-300">
+                  {edu.degree}
+                </CardTitle>
+                <CardDescription className="text-gray-200">
+                  {edu.institution}
+                </CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="text-gray-400 text-sm">{edu.year}</div>
@@ -208,10 +230,7 @@ function HomePage() {
         <h2 className="text-xl font-semibold text-white mb-4">Experience</h2>
         <div className="flex flex-col gap-3">
           {experience.map((job, idx) => (
-            <Card
-              key={idx}
-              className="p-4 flex items-start gap-3"
-            >
+            <Card key={idx} className="p-4 flex items-start gap-3">
               {job.logo && (
                 <Image
                   src={job.logo}
@@ -262,10 +281,7 @@ function HomePage() {
         </h2>
         <div className="flex flex-col gap-3">
           {extracurriculars.map((job, idx) => (
-            <Card
-              key={idx}
-              className="p-4 flex items-start gap-3"
-            >
+            <Card key={idx} className="p-4 flex items-start gap-3">
               {job.logo && (
                 <Image
                   src={job.logo}
