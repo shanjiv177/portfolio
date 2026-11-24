@@ -1,63 +1,105 @@
-import React from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Github, Globe, Trophy, FileText } from "lucide-react";
+import { domains } from "@/data/site";
+import Counter from "@/components/Counter";
 
-function ProjectCard({ project }) {
-  const { title, description, tech = [], slug, status, cover } = project;
-  const techArray = Array.isArray(tech)
-    ? tech
-    : typeof tech === "string"
-    ? tech.split(",").map(t => t.trim())
-    : [];
+const linkMeta = {
+  code: { label: "Code", Icon: Github },
+  live: { label: "Live", Icon: Globe },
+  showcase: { label: "ETHGlobal page", Icon: Trophy },
+};
+
+export default function ProjectCard({ project, headingLevel = "h3" }) {
+  const { title, description, tech = [], slug, status, domain, badge, links = {}, specs, command } =
+    project;
+  const Heading = headingLevel;
+  const d = domains[domain] ?? domains.systems;
+  const techArray = Array.isArray(tech) ? tech : String(tech).split(",").map((t) => t.trim());
 
   return (
-    <Card className="bg-neutral-900/40 border border-neutral-800 backdrop-blur-xl shadow-sm hover:shadow-md transition-shadow p-4 gap-2">
-      {cover && (
-        <div className="w-full mb-2 rounded overflow-hidden">
-          <Image
-            src={cover}
-            alt={title}
-            width={600}
-            height={300}
-            className="w-full object-cover rounded"
-            priority={false}
-          />
-        </div>
+    <article className="brutal relative h-full flex flex-col">
+      {badge && (
+        <span
+          className="absolute -top-3.5 right-4 z-10 border-2 border-ink bg-web3 px-2.5 py-1 text-sm font-black rotate-[4deg] shadow-[3px_3px_0_0_var(--ink)]"
+          style={{ fontStretch: "115%" }}
+        >
+          {badge}
+        </span>
       )}
-      <CardHeader className="p-2 pb-0 flex flex-col">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-white text-base font-semibold line-clamp-1">{title}</CardTitle>
-          {status && (
-            <span className="text-xs px-2 py-0.5 rounded bg-neutral-800 text-gray-300 ml-2">
-              {status}
+
+      {/* Domain strip: the colour tells you what kind of work this is */}
+      <div
+        className="flex items-center justify-between gap-3 border-b-2 border-ink px-4 py-1.5 text-sm font-bold"
+        style={{ background: d.color }}
+      >
+        <span>{d.label}</span>
+        {status && <span className="font-semibold">{status}</span>}
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        <Heading className="heading text-2xl">
+          <Link href={`/projects/${slug}`} className="hover:underline decoration-2 underline-offset-4">
+            {title}
+          </Link>
+        </Heading>
+        <p className="mt-2 text-[0.98rem] max-w-[62ch]">{description}</p>
+
+        {command && (
+          <pre className="mt-4 overflow-x-auto border-2 border-ink bg-ink px-3 py-2 font-mono text-[0.85rem] text-panel">
+            <span className="text-networks" aria-hidden>
+              ${" "}
             </span>
-          )}
+            {command}
+          </pre>
+        )}
+
+        {specs && (
+          <dl className="mt-5 grid grid-cols-2 sm:grid-cols-5 border-2 border-ink bg-networks/20">
+            {specs.map((s) => (
+              <div
+                key={s.label}
+                className="flex flex-col p-3 border-ink [&:not(:last-child)]:border-b-2 sm:[&:not(:last-child)]:border-b-0 sm:[&:not(:last-child)]:border-r-2"
+              >
+                <dt className="text-sm font-semibold leading-tight">{s.label}</dt>
+                <dd className="display text-3xl order-first mb-1">
+                  <Counter value={s.value} suffix={s.suffix} />
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )}
+
+        <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Stack">
+          {techArray.map((t) => (
+            <li key={t} className="chip">
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
+          <Link href={`/projects/${slug}`} className="btn press !px-3.5 !py-1.5 text-sm">
+            <FileText className="size-4" aria-hidden />
+            Details
+          </Link>
+          {Object.entries(links).map(([kind, href]) => {
+            const meta = linkMeta[kind];
+            if (!meta || !href) return null;
+            return (
+              <a
+                key={kind}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn press !px-3.5 !py-1.5 text-sm"
+              >
+                <meta.Icon className="size-4" aria-hidden />
+                {meta.label}
+              </a>
+            );
+          })}
         </div>
-        <CardDescription className="text-gray-400 text-xs flex flex-wrap items-center">
-          {techArray.length > 0 && (
-            <span className="flex flex-wrap gap-1">
-              {techArray.map(t => (
-                <span
-                  key={t}
-                  className="bg-neutral-800 text-gray-300 px-2 py-0.5 rounded text-[10px] font-medium"
-                >
-                  {t}
-                </span>
-              ))}
-            </span>
-          )}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="p-2 pt-1">
-        <p className="text-gray-300 text-xs line-clamp-2">{description}</p>
-      </CardContent>
-      <Link href={`/projects/${slug}`} className="block mt-1">
-        <Button variant="secondary">View Details &rarr;</Button>
-      </Link>
-    </Card>
+      </div>
+    </article>
   );
 }
-
-export default ProjectCard;

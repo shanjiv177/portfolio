@@ -1,12 +1,13 @@
 ---
 title: "Hamfest India 2026 Website"
 slug: "hamfest-india-2026-website"
-description: "Developed the official ticketing and registration platform for Hamfest 2026 using Next.js, Razorpay, and Strapi."
+description: "The official ticketing and registration platform for Hamfest India 2026, with Razorpay payments and QR check-in at the venue."
 tech: ["Next.js", "TailwindCSS", "Razorpay", "Strapi", "Nginx"]
 date: "2026-01-01"
 status: "Completed"
-ReadMore: false
-weight: 0
+weight: 5
+domain: "web"
+featured: true
 ---
 
 Developed the official ticketing and registration platform for Hamfest 2026 facilitating seamless online ticket sales.

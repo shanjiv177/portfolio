@@ -6,8 +6,8 @@ tech:
   ["Docker", "Kubernetes", "Nginx", "Ruby on Rails", "MySQL", "GitLab CI/CD"]
 date: "2024-02-01"
 status: "Completed"
-ReadMore: true
-weight: 1
+weight: 10
+domain: "systems"
 ---
 
 Containerized a full Ruby on Rails application along with its MySQL database.

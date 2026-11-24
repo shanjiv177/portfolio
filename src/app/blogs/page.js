@@ -1,23 +1,22 @@
-import { getAllBlogs } from '@/lib/blogs'
-import React from 'react'
-import Link from 'next/link';
-import BlogCard from '@/app/blogs/BlogCard';
+import { getAllBlogs } from "@/lib/blogs";
+import BlogCard from "./BlogCard";
 
-function Blogs() {
+export const metadata = { title: "Writing" };
+
+export default function Blogs() {
   const blogs = getAllBlogs();
 
   return (
-    <div className="max-w-4xl mt-24 mx-auto px-4 sm:px-6 md:px-10 my-6">
-      <h1 className="font-bold text-2xl">Shanjiv&apos;s Blogs</h1>
-      <ul className="flex flex-col gap-4 mt-4">
-        {blogs.map((blog) => (
-          <li key={blog.slug}>
-            <BlogCard blog={blog} />
+    <main className="mx-auto max-w-5xl px-4 sm:px-6 pt-32 pb-16">
+      <h1 className="display text-[clamp(3rem,9vw,6.5rem)]">Writing</h1>
+      <p className="mt-5 mb-12 text-xl max-w-[52ch]">Notes on Linux, tooling and how I got into all of this.</p>
+      <ul className="grid gap-5">
+        {blogs.map((b) => (
+          <li key={b.slug}>
+            <BlogCard blog={b} headingLevel="h2" />
           </li>
         ))}
       </ul>
-    </div>
-  )
+    </main>
+  );
 }
-
-export default Blogs

@@ -1,24 +1,19 @@
-import { getAllBlogs } from '@/lib/blogs'
-import React from 'react'
-import Link from 'next/link';
-import { getAllProjects } from '@/lib/projects';
-import ProjectCard from './ProjectCard';
+import { getAllProjects, toCard } from "@/lib/projects";
+import ProjectGrid from "@/components/ProjectGrid";
 
-function Blogs() {
-  const projects = getAllProjects();
+export const metadata = { title: "Projects" };
+
+export default function Projects() {
+  const projects = getAllProjects().map(toCard);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-10 my-6 mt-24">
-      <h1 className="font-bold text-2xl">Shanjiv&apos;s Projects</h1>
-      <ul className="flex flex-col gap-4 mt-4">
-        {projects.map((project) => (
-          <li key={project.slug}>
-            <ProjectCard project={project} />
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32 pb-16">
+      <h1 className="display text-[clamp(3rem,9vw,6.5rem)]">Projects</h1>
+      <p className="mt-5 mb-12 text-xl max-w-[52ch]">
+        Everything from allocators and key-value stores to event networks and onchain escrow. Filter by
+        area, or open one for the details.
+      </p>
+      <ProjectGrid projects={projects} headingLevel="h2" />
+    </main>
+  );
 }
-
-export default Blogs

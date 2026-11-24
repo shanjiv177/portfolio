@@ -1,55 +1,39 @@
-import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { formatBlogDate, parseBlogDate } from "@/lib/blogs";
 
-function BlogCard({ blog }) {
+// One row in a list of posts: date, title, summary, tags.
+export default function BlogCard({ blog, headingLevel = "h3" }) {
   const { title, seoDescription, datePublished, tags, slug } = blog;
+  const Heading = headingLevel;
   const tagsArray = Array.isArray(tags)
     ? tags
     : typeof tags === "string"
-    ? tags.split(",").map((tag) => tag.trim())
-    : [];
+      ? tags.split(",").map((t) => t.trim())
+      : [];
 
   return (
-    <Card className="p-2">
-      <CardHeader className="p-2 pb-0">
-        <CardTitle className="text-white text-base font-semibold mb-1 line-clamp-1">
+    <Link
+      href={`/blogs/${slug}`}
+      className="brutal press group grid gap-x-8 gap-y-2 p-5 sm:grid-cols-[9rem_minmax(0,1fr)]"
+    >
+      <time dateTime={parseBlogDate(datePublished).toISOString().slice(0, 10)} className="font-semibold text-ink-soft sm:pt-1">
+        {formatBlogDate(datePublished)}
+      </time>
+      <div>
+        <Heading className="heading text-xl sm:text-2xl group-hover:underline decoration-2 underline-offset-4">
           {title}
-        </CardTitle>
-        <CardDescription className="text-gray-400 text-xs flex flex-wrap gap-2 items-center">
-          <span>{datePublished}</span>
-          {tagsArray.length > 0 && (
-            <span className="flex flex-wrap gap-1">
-              {tagsArray.map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-neutral-800 text-gray-300 px-2 py-0.5 rounded text-[10px] font-medium ml-2"
-                >
-                  {tag}
-                </span>
-              ))}
-            </span>
-          )}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="p-2 pt-1">
-        <p className="text-gray-300 text-xs line-clamp-2">{seoDescription}</p>
-      </CardContent>
-      <CardFooter className="p-2 pt-1">
-        <Link href={`/blogs/${slug}`}>
-          <Button variant="secondary">Read more</Button>
-        </Link>
-      </CardFooter>
-    </Card>
+        </Heading>
+        {seoDescription && <p className="mt-1.5 max-w-[64ch]">{seoDescription}</p>}
+        {tagsArray.length > 0 && (
+          <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Tags">
+            {tagsArray.map((t) => (
+              <li key={t} className="chip">
+                {t}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </Link>
   );
 }
-
-export default BlogCard;

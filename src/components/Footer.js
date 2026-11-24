@@ -1,45 +1,29 @@
-import React from "react";
-import Link from "next/link";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
+import XIcon from "./XIcon";
+import { links } from "@/data/site";
+
+const socials = [
+  { href: links.github, label: "GitHub", Icon: Github },
+  { href: links.linkedin, label: "LinkedIn", Icon: Linkedin },
+  { href: links.x, label: "X", Icon: XIcon },
+];
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-neutral-800 py-6 mt-12">
-      <ul className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <li className="flex gap-1 justify-center items-center hover:text-blue-400">
-          <Github className="w-4 h-4" />
-          <Link
-            href="https://github.com/shanjiv177"
-            target="_blank"
-            rel="noopener"
-            className="transition-colors"
-          >
-            GitHub
-          </Link>
-        </li>
-        <li className="flex gap-1 justify-center items-center hover:text-blue-400">
-          <Linkedin className="w-4 h-4" />
-          <Link
-            href="https://linkedin.com/in/shanjiv"
-            target="_blank"
-            rel="noopener"
-            className="transition-colors"
-          >
-            LinkedIn
-          </Link>
-        </li>
-        <li className="flex gap-1 justify-center items-center hover:text-blue-400">
-          <Twitter className="w-4 h-4" />
-          <Link
-            href="https://x.com/shanjiv177"
-            target="_blank"
-            rel="noopener"
-            className="transition-colors"
-          >
-            X/Twitter
-          </Link>
-        </li>
-      </ul>
+    <footer className="mt-10 border-t-2 border-ink bg-panel">
+      <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 sm:px-6 py-8 sm:flex-row sm:items-center sm:justify-between">
+        <p className="font-semibold">© {new Date().getFullYear()} Shanjiv A</p>
+        <ul className="flex flex-wrap gap-2.5">
+          {socials.map(({ href, label, Icon }) => (
+            <li key={label}>
+              <a href={href} target="_blank" rel="noopener noreferrer" className="btn press !px-3.5 !py-1.5 text-sm">
+                <Icon className="size-4" aria-hidden />
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </footer>
   );
 }

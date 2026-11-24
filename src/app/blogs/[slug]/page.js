@@ -1,34 +1,47 @@
-import { getAllBlogs } from '@/lib/blogs'
-import React from 'react'
-import MarkdownIt from 'markdown-it';
-import './page.css'
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import MarkdownIt from "markdown-it";
+import { ArrowLeft } from "lucide-react";
+import { getAllBlogs, formatBlogDate, parseBlogDate } from "@/lib/blogs";
 
-async function fetchBlog(slug) {
-    const blogs = getAllBlogs()
-    return blogs.find(blog => blog.slug === slug) || null;
+const md = new MarkdownIt({ linkify: true });
+
+export function generateStaticParams() {
+  return getAllBlogs().map((b) => ({ slug: b.slug }));
 }
 
-async function Blog({ params }) {
-    const md = new MarkdownIt();
-    const { slug } = await params;
-    const blog = await fetchBlog(slug);
-
-    if (!blog) {
-        return <div>Blog not found</div>;
-    }
-
-    const htmlConverter = md.render(blog.content);
-
-    return (
-        <article className="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-10 mt-24">
-            <h1 className="text-3xl sm:text-4xl font-bold">{blog.title}</h1>
-            <p className="text-gray-400 text-sm mb-4">{blog.date}</p>
-            <div
-                dangerouslySetInnerHTML={{ __html: htmlConverter }}
-                className="markdown-body"
-            />
-        </article>
-    );
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const blog = getAllBlogs().find((b) => b.slug === slug);
+  return blog ? { title: blog.seoTitle || blog.title, description: blog.seoDescription } : {};
 }
 
-export default Blog
+export default async function Blog({ params }) {
+  const { slug } = await params;
+  const blog = getAllBlogs().find((b) => b.slug === slug);
+  if (!blog) notFound();
+
+  return (
+    <main className="mx-auto max-w-3xl px-4 sm:px-6 pt-28 pb-16">
+      <Link href="/blogs" className="btn press !px-3.5 !py-1.5 text-sm">
+        <ArrowLeft className="size-4" aria-hidden />
+        All posts
+      </Link>
+      <article className="mt-10">
+        <header>
+          <time
+            dateTime={parseBlogDate(blog.datePublished).toISOString().slice(0, 10)}
+            className="font-semibold text-ink-soft"
+          >
+            {formatBlogDate(blog.datePublished)}
+          </time>
+          <h1 className="heading mt-3 text-[clamp(2.2rem,6vw,3.6rem)]">{blog.title}</h1>
+        </header>
+        <div
+          className="prose-brutal mt-10"
+          dangerouslySetInnerHTML={{ __html: md.render(blog.content) }}
+        />
+      </article>
+    </main>
+  );
+}

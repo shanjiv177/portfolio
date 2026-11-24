@@ -4,10 +4,10 @@ slug: "centre-for-system-design-website"
 description: "Built the official website for the Centre for System Design, NITK with Next.js, Strapi CMS, and TailwindCSS."
 tech: ["Next.js", "Strapi CMS", "Tailwind CSS"]
 date: "2024-09-01"
-status: "Ongoing"
-ReadMore: false
+status: "Completed"
 cover: /projects/centre-for-system-design/cover.png
-weight: 0
+weight: 9
+domain: "web"
 ---
 
 Built the official website for the Centre for System Design, NITK.
